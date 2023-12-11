@@ -15,6 +15,7 @@ class User(BaseModel):
         email: The visiting users email
         password: The users UNIQUE password
       """
+    
     first_name = ""
     last_name = ""
     email = ""

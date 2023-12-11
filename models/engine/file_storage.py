@@ -5,13 +5,13 @@ functions that will help in the serialisation to json and also
 the deserialsation from json format
 """
 import json
-from models.base_model import BaseModel
-from models.user import User
-from models.state import State
 from models.city import City
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
 
 
 class FileStorage:
@@ -27,7 +27,7 @@ class FileStorage:
     __objects = {}
 
     def all(self):
-        """ Returns the dictionary __objects"""
+        """will return all objects found in dictionary"""
         return FileStorage.__objects
 
     def new(self, obj):
@@ -37,12 +37,9 @@ class FileStorage:
     
     def save(self):
         """ serializes __objects to the JSON file (path: __file_path)"""
-        obj_dict = {}
-
-        for key, value in FileStorage.__objects.items():
-            obj_dict[key] = value.to_dict()
-
-        with open(FileStorage.__file_path, 'w', encoding="utf-8") as file:
+        odict = FileStorage.__objects
+        obj_dict = {obj: odict[obj].to_dict() for obj in odict.keys()}
+        with open(FileStorage.__file_path, "w") as file:
             json.dump(obj_dict, file)
 
     def reload(self):
@@ -52,14 +49,9 @@ class FileStorage:
         try:
             with open(FileStorage.__file_path) as file:
                 object_dict = json.load(file)
-                for objt in object_dict.values():
-                    class_name = objt["__class__"]
-                    del objt["__class__"]
-                    self.new(eval(class_name)(**objt))
+                for objct in object_dict.values():
+                    class_name = objct["__class__"]
+                    del objct["__class__"]
+                    self.new(eval(class_name)(**objct))
         except FileNotFoundError:
             return
-
-
-
-
-

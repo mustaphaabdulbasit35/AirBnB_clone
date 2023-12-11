@@ -12,5 +12,6 @@ class City(BaseModel):
         state_id(str): Uniquely identifies a given state
         name(str): represents the naming of the city
     """
+    
     state_id = ""
     name = ""

@@ -23,6 +23,7 @@ class Place(BaseModel):
         number_rooms (int): shows the number of rooms in the place
         number_bathrooms (int): bathroom amount/number.
     """
+    
     description = ""
     number_rooms = 0
     number_bathrooms = 0

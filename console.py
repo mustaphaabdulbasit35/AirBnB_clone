@@ -1,8 +1,6 @@
 #!/usr/bin/python3
-"""
-Here we are defining the actual console, using the cmd module
-Don't forget implementing commands
-"""
+"""Here we are defining the actual console, using the cmd module
+Don't forget implementing commands"""
 import re
 import cmd
 from models.city import City
@@ -24,7 +22,7 @@ class HBNBCommand(cmd.Cmd):
         prompt(hbnb): represents the prompt of our command line interpreter
     """
     prompt = "(hbnb) "
-    defined_classes = {
+    __defined_classes = {
         "BaseModel",
         "User",
         "State",
@@ -69,7 +67,7 @@ class HBNBCommand(cmd.Cmd):
         arg_list = parse_command(arg)
         if len(arg_list) == 0:
             print("** class name missing **")
-        elif arg_list[0] not in HBNBCommand.defined_classes:
+        elif arg_list[0] not in HBNBCommand.__defined_classes:
             print("** class doesn't exist **")
         else:
             print(eval(arg_list[0])().id)
@@ -97,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
         object_dict = storage.all()
         if len(arg_list) == 0:
             print("** class name missing **")
-        elif arg_list[0] not in HBNBCommand.defined_classes:
+        elif arg_list[0] not in HBNBCommand.__defined_classes:
             print("** class doesn't exist **")
         elif len(arg_list) == 1:
             print("** instance id missing **")
@@ -110,13 +108,13 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, arg):
         """
         Shows class <id> or <class>.show(<id>)
-        Display the string representation of a class instance of a given id.
+        Display the string representation of a class instance, given the ID.
         """
         arg_list = parse_command(arg)
         object_dict = storage.all()
         if len(arg_list) == 0:
             print("** class name missing **")
-        elif arg_list[0] not in HBNBCommand.defined_classes:
+        elif arg_list[0] not in HBNBCommand.__defined_classes:
             print("** class doesn't exist **")
         elif len(arg_list) == 1:
             print("** instance id missing **")
@@ -132,8 +130,8 @@ class HBNBCommand(cmd.Cmd):
         """
         arg_list = parse_command(arg)
         cnt = 0
-        for object in storage.all().values():
-            if arg_list[0] == object.__class__.__name__:
+        for objct in storage.all().values():
+            if arg_list[0] == objct.__class__.__name__:
                 cnt += 1
         print(cnt)
 
@@ -143,17 +141,17 @@ class HBNBCommand(cmd.Cmd):
         on the class name
         If no class is specified, displays all instantiated objects.
         """
-        argl = parse(arg)
-        if len(argl) > 0 and argl[0] not in HBNBCommand.__classes:
+        arg_list = parse_command(arg)
+        if len(arg_list) > 0 and arg_list[0] not in HBNBCommand.__defined_classes:
             print("** class doesn't exist **")
         else:
-            objl = []
-            for objec in storage.all().values():
-                if len(argl) > 0 and argl[0] == objec.__class__.__name__:
-                    objl.append(objec.__str__())
-                elif len(argl) == 0:
-                    objl.append(objec.__str__())
-            print(objl)
+            object_list = []
+            for objct in storage.all().values():
+                if len(arg_list) > 0 and arg_list[0] == objct.__class__.__name__:
+                    object_list.append(objct.__str__())
+                elif len(arg_list) == 0:
+                    object_list.append(objct.__str__())
+            print(object_list)
 
     def do_update(self, arg):
         """
@@ -166,7 +164,7 @@ class HBNBCommand(cmd.Cmd):
         if len(arg_list) == 0:
             print("** class name missing **")
             return False
-        if arg_list[0] not in HBNBCommand.defined_classes:
+        if arg_list[0] not in HBNBCommand.__defined_classes:
             print("** class doesn't exist **")
             return False
         if len(arg_list) == 1:
@@ -186,21 +184,21 @@ class HBNBCommand(cmd.Cmd):
                 return False
 
         if len(arg_list) == 4:
-            object = object_dict["{}.{}".format(arg_list[0], arg_list[1])]
-            if arg_list[2] in object.__class__.__dict__.keys():
-                value_type = type(obj.__class__.__dict__[arg_list[2]])
-                obj.__dict__[arg_list[2]] = value_type(arg_list[3])
+            objct = object_dict["{}.{}".format(arg_list[0], arg_list[1])]
+            if arg_list[2] in objct.__class__.__dict__.keys():
+                value_type = type(objct.__class__.__dict__[arg_list[2]])
+                objct.__dict__[arg_list[2]] = value_type(arg_list[3])
             else:
-                obj.__dict__[arg_list[2]] = arg_list[3]
+                objct.__dict__[arg_list[2]] = arg_list[3]
         elif type(eval(arg_list[2])) == dict:
-            obj = object_dict["{}.{}".format(arg_list[0], arg_list[1])]
+            objct = object_dict["{}.{}".format(arg_list[0], arg_list[1])]
             for key, value in eval(arg_list[2]).items():
-                if (key in object.__class__.__dict__.keys() and
-                        type(object.__class__.__dict__[key]) in {str, int, float}):
-                    value_type = type(object.__class__.__dict__[key])
-                    object.__dict__[key] = value_type(value)
+                if (key in objct.__class__.__dict__.keys() and
+                        type(objct.__class__.__dict__[key]) in {str, int, float}):
+                    value_type = type(objct.__class__.__dict__[key])
+                    objct.__dict__[key] = value_type(value)
                 else:
-                    object.__dict__[key] = value
+                    objct.__dict__[key] = value
         storage.save()
 
 

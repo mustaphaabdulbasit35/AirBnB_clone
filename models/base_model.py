@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """This whole module has the sole purpose to define
        the base model for our modules/classes"""
-import models
 from uuid import uuid4
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -50,7 +50,7 @@ class BaseModel:
         """Represents a dictionary that specifies the meaning of our
         class variables and thier content"""
         class_dict = self.__dict__.copy()
-        class_dict["__class__"] = type(self).__name__
+        class_dict["__class__"] = self.__class__.__name__
         class_dict["created_at"] = class_dict["created_at"].isoformat()
         class_dict["updated_at"] = class_dict["updated_at"].isoformat()
         return class_dict

@@ -10,4 +10,5 @@ class Amenity(BaseModel):
     """
     This class defines the amenities module
     """
+    
     name = ""
