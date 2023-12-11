@@ -143,17 +143,17 @@ class HBNBCommand(cmd.Cmd):
         on the class name
         If no class is specified, displays all instantiated objects.
         """
-        arg_list = parse_command(arg)
-        if len(arg_list) > 0 and arg_list[0] not in HBNBCommand.defined_classes:
+        argl = parse(arg)
+        if len(argl) > 0 and argl[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
-            object_list = []
-            for object in storage.all().values():
-                if len(arg_list) > 0 and arg_list[0] == object.__class__.__name__:
-                    object_list.append(object.__str__())
-                elif len(arg_list) == 0:
-                    object_list.append(object.__str__())
-            print(object_list)
+            objl = []
+            for objec in storage.all().values():
+                if len(argl) > 0 and argl[0] == objec.__class__.__name__:
+                    objl.append(objec.__str__())
+                elif len(argl) == 0:
+                    objl.append(objec.__str__())
+            print(objl)
 
     def do_update(self, arg):
         """
