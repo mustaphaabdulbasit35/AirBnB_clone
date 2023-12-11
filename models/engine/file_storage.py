@@ -5,8 +5,6 @@ functions that will help in the serialisation to json and also
 the deserialsation from json format
 """
 import json
-import os
-import datetime
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State

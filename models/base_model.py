@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This whole module has the sole purpose to define
        the base model for our modules/classes"""
-from models import storage
+import models
 from uuid import uuid4
 from datetime import datetime
 

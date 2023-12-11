@@ -3,7 +3,7 @@
 MOdule to precise the state inhich the AIRBNB
 is located
 """
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 
 
 class State(BaseModel):
